@@ -1,5 +1,5 @@
 """
-SELENE — Streamlit entry point.
+SELENE - Streamlit entry point.
 
 Usage: streamlit run app.py
 

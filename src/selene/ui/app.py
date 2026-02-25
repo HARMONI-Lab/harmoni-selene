@@ -18,7 +18,7 @@ from selene import settings
 
 @st.cache_resource
 def _setup_logging():
-    """Configure root logger once — cached to avoid duplicate handlers on rerun."""
+    """Configure root logger once - cached to avoid duplicate handlers on rerun."""
     root_logger = logging.getLogger()
     if getattr(root_logger, "_selene_logging_configured", False):
         return root_logger

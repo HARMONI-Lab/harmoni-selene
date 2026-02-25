@@ -42,7 +42,7 @@ _http_session = requests.Session()
 
 
 class Config:
-    """Configuration — delegates to centralized settings.py."""
+    """Configuration - delegates to centralized settings.py."""
 
     DB_PATH = settings.DB_PATH
     COLLECTION_NAME = settings.MEDICAL_DOCS_COLLECTION
@@ -547,9 +547,9 @@ def _prepare_medgemma_request(
 
     # System instruction
     system_instruction = """You are SELENE, a menopause reasoning engine.
-        IDENTITY: Synthesize user data with your clinical training and the [RESEARCH CONTEXT — CURATED, RECENT].
+        IDENTITY: Synthesize user data with your clinical training and the [RESEARCH CONTEXT - CURATED, RECENT].
         KNOWLEDGE HIERARCHY:
-        1. Ground claims in [RESEARCH CONTEXT — CURATED, RECENT], but weave findings naturally into the narrative.
+        1. Ground claims in [RESEARCH CONTEXT - CURATED, RECENT], but weave findings naturally into the narrative.
         2. Use internal medical knowledge to explain the "why" (pathophysiology).
 
         TONE & STYLE:
@@ -572,7 +572,7 @@ def _prepare_medgemma_request(
         sections.append(f"[PATIENT PROFILE & RECENT SYMPTOMS]:\n{user_context}")
 
     if context:
-        sections.append(f"[RESEARCH CONTEXT — CURATED, RECENT]:\n{context}")
+        sections.append(f"[RESEARCH CONTEXT - CURATED, RECENT]:\n{context}")
 
     if chat_context:
         sections.append(f"[RELEVANT PAST CONVERSATIONS]:\n{chat_context}")

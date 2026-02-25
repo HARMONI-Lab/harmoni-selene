@@ -1,4 +1,4 @@
-# SELENE — Technical Reference (Engineering & Maintainer Guide) 
+# SELENE - Technical Reference (Engineering & Maintainer Guide) 
 
 > Author: Inna Campo
 > Last updated: 2026-02-08  
@@ -43,7 +43,7 @@
 ### Non-goals and explicit limitations
 - Not a medical device; not certified clinical software.
 - Not intended to make diagnoses or issue prescriptions.
-- Not a substitute for clinical evaluation—explicit referral triggers should direct users to clinicians.
+- Not a substitute for clinical evaluation-explicit referral triggers should direct users to clinicians.
 - No built-in encrypted-at-rest storage (see “Assumptions” & “Privacy” for details).
 - Not resilient to a fully compromised host: if the machine is compromised, confidentiality guarantees are limited.
 
@@ -53,24 +53,24 @@
 
 ### Major components (modules & responsibilities)
 - UI (Streamlit views):
-  - `views/home.py` — dashboard
-  - `views/pulse.py` — Daily Attune data capture
-  - `views/chat.py` — interactive chat with RAG and streaming LLM
-  - `views/clinical.py` — clinical summary & insights
+  - `views/home.py` - dashboard
+  - `views/pulse.py` - Daily Attune data capture
+  - `views/chat.py` - interactive chat with RAG and streaming LLM
+  - `views/clinical.py` - clinical summary & insights
 - Persistence:
-  - `data_manager.py` — JSON-based pulse and profile persistence
-  - `chat_db.py` — chat session persistence (Chroma collection `chat_history`)
-  - ChromaDB (under `user_data/user_med_db`) — `medical_docs` (knowledge base) + `chat_history`
+  - `data_manager.py` - JSON-based pulse and profile persistence
+  - `chat_db.py` - chat session persistence (Chroma collection `chat_history`)
+  - ChromaDB (under `user_data/user_med_db`) - `medical_docs` (knowledge base) + `chat_history`
 - Reasoning & retrieval:
-  - `med_logic.py` — RAG orchestration, caching, contextualization, MedGemma calls
-  - `context_builder.py` / `context_builder_multi_agent.py` — user snapshot & pulse aggregation
-  - `deterministic_analysis.py` — math layer: statistics, pattern detection, rule-based risk scoring
-  - `insights_generator.py` — deterministic pre-processing + single MedGemma call for report generation (uses `context_builder_multi_agent` context)
-  - `context_builder_multi_agent.py` — aggregates profile, pulse history, notes, and chat into a unified context for reports
+  - `med_logic.py` - RAG orchestration, caching, contextualization, MedGemma calls
+  - `context_builder.py` / `context_builder_multi_agent.py` - user snapshot & pulse aggregation
+  - `deterministic_analysis.py` - math layer: statistics, pattern detection, rule-based risk scoring
+  - `insights_generator.py` - deterministic pre-processing + single MedGemma call for report generation (uses `context_builder_multi_agent` context)
+  - `context_builder_multi_agent.py` - aggregates profile, pulse history, notes, and chat into a unified context for reports
 - Knowledge ingestion & CLI:
-  - `update_kb_chroma.py` — import/export tools for Chroma DB
+  - `update_kb_chroma.py` - import/export tools for Chroma DB
 - Configuration:
-  - `settings.py` — single source of truth for paths, model names, TTLs, etc.
+  - `settings.py` - single source of truth for paths, model names, TTLs, etc.
 
 ### On-device inference flow (simplified)
 1. User sends input via UI (chat or ask for clinical summary).
@@ -78,7 +78,7 @@
 3. `med_logic.query_knowledge_base()` queries Chroma (`medical_docs`) using the embedding function (settings.get_embedding_function()).
 4. `med_logic._prepare_medgemma_request()` assembles:
    - system instruction (see Section 4)
-   - [PATIENT PROFILE], [RESEARCH CONTEXT — CURATED], [RELEVANT PAST CONVERSATIONS], and immediate rolling buffer of recent chat.
+   - [PATIENT PROFILE], [RESEARCH CONTEXT - CURATED], [RELEVANT PAST CONVERSATIONS], and immediate rolling buffer of recent chat.
 5. LLM call via `med_logic.call_medgemma()` or streaming `call_medgemma_stream()` to local Ollama endpoint (`settings.OLLAMA_BASE_URL`).
 6. Response is rendered in UI; messages + metadata saved to `chat_history` collection via `chat_db.save_message()`.
 
@@ -119,7 +119,7 @@
 - `med_logic._prepare_medgemma_request()` composes:
   - System instruction (explicit constraints)
   - `[PATIENT PROFILE & RECENT SYMPTOMS]` (from `context_builder.build_user_context()`)
-  - `[RESEARCH CONTEXT — CURATED, RECENT]` (from RAG formatted chunks)
+  - `[RESEARCH CONTEXT - CURATED, RECENT]` (from RAG formatted chunks)
   - `[RELEVANT PAST CONVERSATIONS]` (from `chat_db`)
   - `[IMMEDIATE CONVERSATION HISTORY]` (rolling buffer)
 - The prompt is deliberately "double-wrapped" (question repeated post-context) to reduce context misalignment.
@@ -159,7 +159,7 @@
   - Tone & style: warm, grounding, avoid certain phrases; **no empathy preambles**, avoid formulaic statements.
   - Constraints: **Never prescribe**; suggest discussing with a clinician.
 - Prompt assembly:
-  - Sections appended: `[PATIENT PROFILE & RECENT SYMPTOMS]`, `[RESEARCH CONTEXT — CURATED, RECENT]`, `[RELEVANT PAST CONVERSATIONS]`, `[IMMEDIATE CONVERSATION HISTORY]`.
+  - Sections appended: `[PATIENT PROFILE & RECENT SYMPTOMS]`, `[RESEARCH CONTEXT - CURATED, RECENT]`, `[RELEVANT PAST CONVERSATIONS]`, `[IMMEDIATE CONVERSATION HISTORY]`.
   - Double-wrap technique: repeat the primary patient question after context.
 
 ### Guardrails, safety boundaries, and uncertainty handling
@@ -177,7 +177,7 @@
 ### How hallucination risk is mitigated
 - Deterministic math and hybrid architecture:
   - Critical numeric and pattern detection tasks executed deterministically (`deterministic_analysis.py`).
-  - LLM is used for interpretation and narrative synthesis only—interprets deterministic outputs and curated RAG context.
+  - LLM is used for interpretation and narrative synthesis only-interprets deterministic outputs and curated RAG context.
 - Low temperature + stop tokens + conservative system instruction.
 - Evidence anchor: LLM must reference the RAG context; source lists are surfaced to the user.
 - Cache & rewriting policies reduce ambiguous short prompts (contextualization step rewrites follow-ups into standalone queries).
@@ -293,15 +293,15 @@
 
 ### Directory layout (key files)
 - Top-level modules:
-  - `app.py` — Streamlit app runner
-  - `med_logic.py` — RAG + LLM orchestration & caching
-  - `context_builder.py` / `context_builder_multi_agent.py` — build patient context
-  - `data_manager.py` — persist pulse entries with validation, backups, and cache invalidation
-  - `chat_db.py` — chat persistence + semantic retrieval
-  - `deterministic_analysis.py` — math layer, pattern detection, risk rules
-  - `insights_generator.py` — deterministic pre-processing + single-LLM report generation
-  - `update_kb_chroma.py` — CLI import/export for Chroma
-  - `settings.py` — configuration
+  - `app.py` - Streamlit app runner
+  - `med_logic.py` - RAG + LLM orchestration & caching
+  - `context_builder.py` / `context_builder_multi_agent.py` - build patient context
+  - `data_manager.py` - persist pulse entries with validation, backups, and cache invalidation
+  - `chat_db.py` - chat persistence + semantic retrieval
+  - `deterministic_analysis.py` - math layer, pattern detection, risk rules
+  - `insights_generator.py` - deterministic pre-processing + single-LLM report generation
+  - `update_kb_chroma.py` - CLI import/export for Chroma
+  - `settings.py` - configuration
 
 ### Responsibilities of key modules
 - `med_logic.py`:
@@ -436,4 +436,4 @@
 [SOURCE: <file> | SECTION: <section>]
 <document text>
 ```
-This is the data fed under `[RESEARCH CONTEXT — CURATED, RECENT]` to the LLM to improve traceability.
+This is the data fed under `[RESEARCH CONTEXT - CURATED, RECENT]` to the LLM to improve traceability.

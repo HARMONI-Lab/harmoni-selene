@@ -28,7 +28,7 @@ VALID_CLIMATE_VALUES = {"Cool", "Warm", "Flashing", "Heavy"}
 VALID_CLARITY_VALUES = {"Brain Fog", "Neutral", "Focused"}
 
 # Concise neuro-symptom labels for LLM context injection.
-# Single source of truth — imported by context_builder.py
+# Single source of truth - imported by context_builder.py
 NEURO_SYMPTOM_MAP = {
     "3am_wakeup": "The 3 AM Wakeup (nighttime waking with anxiety)",
     "word_search": "The Word Search (difficulty finding words)",
@@ -36,7 +36,7 @@ NEURO_SYMPTOM_MAP = {
 }
 
 # Extended descriptions displayed in the onboarding UI.
-# Single source of truth — imported by onboarding.py
+# Single source of truth - imported by onboarding.py
 NEURO_SYMPTOM_DESCRIPTIONS = {
     "3am_wakeup": "The 3 AM Wakeup: Feeling wide awake and anxious in the middle of the night.",
     "word_search": "The Word Search: Difficulty finding common words or losing your train of thought.",

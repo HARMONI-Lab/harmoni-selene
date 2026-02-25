@@ -8,7 +8,7 @@ instead of hardcoding values across modules.
 
 import os
 
-# Force libraries to only look for local files — must be set before
+# Force libraries to only look for local files - must be set before
 # importing transformers, sentence_transformers, or huggingface_hub.
 os.environ.setdefault("TRANSFORMERS_OFFLINE", "1")
 os.environ.setdefault("HF_DATASETS_OFFLINE", "1")

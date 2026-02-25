@@ -23,12 +23,12 @@ logger = logging.getLogger(__name__)
 
 
 # ============================================================================
-# Configuration — mirrors the style of med_logic.Config
+# Configuration - mirrors the style of med_logic.Config
 # ============================================================================
 
 
 class ChatDBConfig:
-    """Configuration — delegates to centralized settings.py."""
+    """Configuration - delegates to centralized settings.py."""
 
     DB_PATH = settings.DB_PATH
     COLLECTION_NAME = settings.CHAT_HISTORY_COLLECTION
@@ -37,7 +37,7 @@ class ChatDBConfig:
 
 
 # ============================================================================
-# ChromaDB Client — cached so we don't reconnect on every Streamlit rerun
+# ChromaDB Client - cached so we don't reconnect on every Streamlit rerun
 # ============================================================================
 
 
@@ -46,7 +46,7 @@ def _get_chat_client():
     """
     Returns a (collection, None) tuple on success, cached for the app lifetime.
     Uses the same SentenceTransformer embedding model as med_logic so both
-    collections live in the same vector space — consistent and efficient.
+    collections live in the same vector space - consistent and efficient.
     """
     try:
         client = chromadb.PersistentClient(
@@ -71,7 +71,7 @@ def _get_chat_client():
 
 
 # ============================================================================
-# Semantic Retrieval — the reason we embed
+# Semantic Retrieval - the reason we embed
 # ============================================================================
 
 
@@ -98,7 +98,7 @@ def query_chat_history(
     """
     collection, error = _get_chat_client()
     if collection is None:
-        logger.error(f"Cannot query chat history — DB unavailable: {error}")
+        logger.error(f"Cannot query chat history - DB unavailable: {error}")
         return []
 
     count = collection.count()
@@ -205,7 +205,7 @@ def save_message(
     """
     collection, error = _get_chat_client()
     if collection is None:
-        logger.error(f"Cannot save message — DB unavailable: {error}")
+        logger.error(f"Cannot save message - DB unavailable: {error}")
         return False
 
     session_id = _ensure_session_id()
@@ -219,7 +219,7 @@ def save_message(
     metadata = {
         "session_id": session_id,
         "role": role,  # "user" or "bot"
-        "message_index": message_index,  # int — position in session
+        "message_index": message_index,  # int - position in session
         "timestamp": timestamp,
         "had_rag_context": len(rag_sources) > 0 if rag_sources else False,
         # Store sources as a comma-joined string (ChromaDB metadata must be scalar)
@@ -253,7 +253,7 @@ def load_current_session() -> list[dict]:
     """
     collection, error = _get_chat_client()
     if collection is None:
-        logger.error(f"Cannot load session — DB unavailable: {error}")
+        logger.error(f"Cannot load session - DB unavailable: {error}")
         return []
 
     session_id = _ensure_session_id()
@@ -281,7 +281,7 @@ def load_current_session() -> list[dict]:
                 }
             )
 
-        # Sort ascending by index — ChromaDB doesn't guarantee order on .get()
+        # Sort ascending by index - ChromaDB doesn't guarantee order on .get()
         messages.sort(key=lambda m: m["message_index"])
 
         # Strip the internal message_index before returning so the format
@@ -315,7 +315,7 @@ def list_past_sessions(limit: int = None) -> list[dict]:
     logger.debug("list_past_sessions: fetching all messages for session summaries")
 
     try:
-        # Pull everything — for a personal app the total message count
+        # Pull everything - for a personal app the total message count
         # will be small enough that this is fine. If it ever grows large
         # we'd want a metadata index, but that's a bridge for later.
         all_results = collection.get(include=["documents", "metadatas"])
@@ -425,7 +425,7 @@ def switch_to_session(session_id: str) -> bool:
 def clear_current_session():
     """
     Start a fresh conversation: new session ID, empty history in state.
-    Does NOT delete the old session from the DB — it stays in past chats.
+    Does NOT delete the old session from the DB - it stays in past chats.
     """
     st.session_state.chat_session_id = new_session_id()
     st.session_state.chat_history = []

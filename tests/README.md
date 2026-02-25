@@ -10,7 +10,7 @@ python3 -m pytest tests/ -v
 
 ## Test Files
 
-### `test_deterministic_analysis.py` — 27 tests
+### `test_deterministic_analysis.py` - 27 tests
 
 Covers `deterministic_analysis.py`: the zero-latency statistical engine.
 
@@ -23,7 +23,7 @@ Covers `deterministic_analysis.py`: the zero-latency statistical engine.
 | **Risk Assessment** | Insufficient data, low risk, persistent poor sleep, severe hot flashes, multiple severe symptoms, concerning notes keyword scan, rapid deterioration, composite high-risk scoring |
 | **Formatting Helpers** | `format_statistics_summary` content, `format_pattern_summary` with/without cycles & outliers |
 
-### `test_context_builder.py` — 19 tests
+### `test_context_builder.py` - 19 tests
 
 Covers `context_builder.py` and `context_builder_multi_agent.py`: user-context aggregation for the LLM prompt.
 
@@ -39,7 +39,7 @@ Covers `context_builder.py` and `context_builder_multi_agent.py`: user-context a
 | **Completeness Score** | Zero when empty, full score (1.0), partial score calculation |
 | **Context Summary** | Formatted summary contains date range, entry counts, completeness percentage |
 
-### `test_med_logic_cache.py` — 34 tests
+### `test_med_logic_cache.py` - 34 tests
 
 Covers the caching infrastructure in `med_logic.py`.
 

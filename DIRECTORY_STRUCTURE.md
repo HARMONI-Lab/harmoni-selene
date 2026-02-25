@@ -126,14 +126,14 @@ from selene.settings import Settings
 
 ## Key Design Decisions
 
-- **`app.py` at root** — thin entry point (`from selene.ui.app import main; main()`) so `streamlit run app.py` works naturally from the repo root.
-- **`src/selene/core/`** — all business logic with no UI imports; testable in isolation.
-- **`src/selene/storage/`** — persistence layer (JSON files + Chroma); separated from core for clear boundaries.
-- **`src/selene/ui/`** — Streamlit-specific code; views are further isolated in `ui/views/`.
-- **`data/`** — runtime data stays out of the package tree; paths configured in `settings.py`.
-- **`scripts/`** — standalone utilities not part of the installed package.
+- **`app.py` at root** - thin entry point (`from selene.ui.app import main; main()`) so `streamlit run app.py` works naturally from the repo root.
+- **`src/selene/core/`** - all business logic with no UI imports; testable in isolation.
+- **`src/selene/storage/`** - persistence layer (JSON files + Chroma); separated from core for clear boundaries.
+- **`src/selene/ui/`** - Streamlit-specific code; views are further isolated in `ui/views/`.
+- **`data/`** - runtime data stays out of the package tree; paths configured in `settings.py`.
+- **`scripts/`** - standalone utilities not part of the installed package.
 
 ## Resources
 
-- [Python Packaging Guide — src layout](https://packaging.python.org/en/latest/discussions/src-layout-vs-flat-layout/)
+- [Python Packaging Guide - src layout](https://packaging.python.org/en/latest/discussions/src-layout-vs-flat-layout/)
 - [pytest good practices](https://docs.pytest.org/en/stable/explanation/goodpractices.html)

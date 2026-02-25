@@ -113,9 +113,9 @@ python -m pytest tests/ -v --cov=src/selene --cov-report=term-missing
 ```
 
 Coverage focus (see [tests/README.md](tests/README.md)):
-- `test_deterministic_analysis.py` — symptom mapping/stats/patterns/risk formatting
-- `test_context_builder.py` — profile/pulse context, notes/chat aggregation, completeness scoring
-- `test_med_logic_cache.py` — TTL cache behavior, eviction, stats, and cache invalidation helpers
+- `test_deterministic_analysis.py` - symptom mapping/stats/patterns/risk formatting
+- `test_context_builder.py` - profile/pulse context, notes/chat aggregation, completeness scoring
+- `test_med_logic_cache.py` - TTL cache behavior, eviction, stats, and cache invalidation helpers
 
 ## Contributing
 
