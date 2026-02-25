@@ -7,18 +7,19 @@
 ---
 
 ## Table of contents
-1. System Overview 
-2. High-Level Architecture 
-3. Data & Knowledge Flow 
-4. Reasoning Engine (MedGemma) 
-5. User Interaction Flows (Home, Attune, Insights, SOS) 
-6. Clinical Safety & Scope 
-7. Privacy & Security 
-8. Code Structure & Conventions 
-9. Deployment & Runtime Considerations 
-10. Testing & Validation 
-11. Future Extensions & Technical Debt 
-12. Assumptions (explicit) 
+1. [System Overview](#system-overview)
+2. [High-Level Architecture](#high-level-architecture)
+3. [Data & Knowledge Flow](#data--knowledge-flow)
+4. [Reasoning Engine (MedGemma)](#reasoning-engine-medgemma)
+5. [User Interaction Flows (Home, Attune, Insights, SOS)](#user-interaction-flows-home-attune-insights-sos)
+6. [Clinical Safety & Scope](#clinical-safety--scope)
+7. [Privacy & Security](#privacy--security)
+8. [Code Structure & Conventions](#code-structure--conventions)
+9. [Deployment & Runtime Considerations](#deployment--runtime-considerations)
+10. [Testing & Validation](#testing--validation)
+11. [Future Extensions & Technical Debt](#future-extensions--technical-debt)
+12. [Assumptions (explicit)](#assumptions-explicit)
+
 
 ---
 
