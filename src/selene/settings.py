@@ -6,7 +6,6 @@ identifiers, API endpoints, and tuning parameters. Import from here
 instead of hardcoding values across modules.
 """
 
-import os
 
 # Disable offline HF flags since we no longer use Hugging Face for embeddings
 # os.environ.setdefault("TRANSFORMERS_OFFLINE", "1")
