@@ -6,7 +6,6 @@ identifiers, API endpoints, and tuning parameters. Import from here
 instead of hardcoding values across modules.
 """
 
-
 # Disable offline HF flags since we no longer use Hugging Face for embeddings
 # os.environ.setdefault("TRANSFORMERS_OFFLINE", "1")
 # os.environ.setdefault("HF_DATASETS_OFFLINE", "1")
@@ -109,7 +108,6 @@ def get_embedding_function():
         from chromadb.utils.embedding_functions import OllamaEmbeddingFunction
 
         _embedding_function_instance = OllamaEmbeddingFunction(
-            url=f"{OLLAMA_BASE_URL}/api/embeddings",
-            model_name=EMBEDDING_MODEL
+            url=f"{OLLAMA_BASE_URL}/api/embeddings", model_name=EMBEDDING_MODEL
         )
     return _embedding_function_instance
